@@ -34,6 +34,7 @@ public class MyPanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 if (!coRysuje()) {
                     punktKon=e.getPoint();
+
                     nowaKrawedz(punktPocz, punktKon);
                     dragMode=false;
                     repaint();
@@ -75,23 +76,20 @@ public class MyPanel extends JPanel {
         super.paintComponents(g);
         Graphics2D g2d = (Graphics2D) g;
         ustawGrafike(g2d);
-        wyczyscJPanel(g2d);
         odtworzJPanel(g2d);
         if (!pierwszePrzejscie) {
             //Czy rysuje kolo
-            if (coRysuje()) {
+            if (coRysuje())
                 rysujKolo(g2d);
-            } else {
+            else
                 rysujKrawedz(g2d);
-            }
-        } else {
 
+        } else
             pierwszePrzejscie = false;
-        }
-        if(!dragMode) {
-            wyczyscJPanel(g2d);
+
+        if(!dragMode)
             odtworzJPanel(g2d);
-        }
+
     }
 
     private boolean coRysuje() {
@@ -123,7 +121,7 @@ public class MyPanel extends JPanel {
     }
 
     private void ustawJPanel() {
-        super.setSize(400, 500);
+        super.setSize(550, 550);
         super.setLocation(0, 0);
         super.setBorder(BorderFactory.createRaisedBevelBorder());
     }
@@ -134,6 +132,7 @@ public class MyPanel extends JPanel {
     }
 
     private void odtworzJPanel(Graphics2D g2d) {
+        wyczyscJPanel(g2d);
         for (Wierzcholek w : Singleton.getInstance().wierzcholki) {
             rysujKolo(g2d, w.getP());
         }
@@ -143,17 +142,21 @@ public class MyPanel extends JPanel {
     }
 
     private void wyczyscJPanel(Graphics2D g2d) {
-        g2d.clearRect(0, 0, 400, 500);
+        g2d.clearRect(0, 0, 550, 550);
     }
 
     private void nowaKrawedz(Point p1, Point p2) {
-        Krawedz temp = new Krawedz();
+
         Wierzcholek pocz= zwrocWierzcholekOIndeksie(najblizszyWierzcholek(p1));
         Wierzcholek kon=zwrocWierzcholekOIndeksie(najblizszyWierzcholek(p2));
-        temp.setPoczatkowy(pocz);
-        temp.setKoncowy(kon);
-        temp.setWaga(1);
-        Singleton.getInstance().krawedzie.add(temp);
+        if(!wierzcholkiSaTakieSame(pocz,kon)) {
+            Krawedz temp = new Krawedz(pocz, kon);
+            if (!czyIstniejeTakaKrawedz(temp)) {
+                Singleton.getInstance().krawedzie.add(temp);
+            } else {
+                wiadmoscOBledzie("Taka krawedz już istnieje");
+            }
+        }
     }
 
     private int najblizszyWierzcholek(Point p) {
@@ -162,11 +165,9 @@ public class MyPanel extends JPanel {
         double najmniejszaOdleglosc = wyliczOdlegloscMiedzyPunktami(p, temp.get(0).getP());
         for (int i = 1; i < temp.size(); i++) {
             double aktualnaOdleglosc = wyliczOdlegloscMiedzyPunktami(p, temp.get(i).getP());
-            System.out.println("Aktualna=" + aktualnaOdleglosc + "najmniejsza=" + najmniejszaOdleglosc + "najblizszy" + najblizszy);
             if (najmniejszaOdleglosc > aktualnaOdleglosc) {
                 najblizszy = i;
                 najmniejszaOdleglosc = aktualnaOdleglosc;
-                System.out.println("JEstem");
             }
         }
         return najblizszy;
@@ -179,6 +180,25 @@ public class MyPanel extends JPanel {
     private Wierzcholek zwrocWierzcholekOIndeksie(int index)
     {
         return Singleton.getInstance().wierzcholki.get(index);
+    }
+    private boolean czyIstniejeTakaKrawedz(Krawedz kr)
+    {
+        for(Krawedz k:Singleton.getInstance().krawedzie)
+        {
+            if(k.equals(kr))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void wiadmoscOBledzie(String str)
+    {
+        JOptionPane.showMessageDialog(null,str,"Błąd",JOptionPane.WARNING_MESSAGE);
+    }
+    private boolean wierzcholkiSaTakieSame(Wierzcholek w1,Wierzcholek w2)
+    {
+        return w1==w2;
     }
 }
 

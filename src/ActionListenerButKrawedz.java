@@ -8,6 +8,8 @@ public class ActionListenerButKrawedz implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         Singleton.getInstance().okno.setCoRysuje(false);
+        Singleton.getInstance().okno.getRbDodajKrawedz().setSelected(true);
+        Singleton.getInstance().okno.getRbdodajWierzcholek().setSelected(false);
     }
 
 }
