@@ -1,4 +1,8 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Created by Admin on 2014-11-16.
@@ -16,13 +20,16 @@ public class GUI extends JFrame {
     private JLabel labWagaWierzcholka;
     private JRadioButton rbDodajKrawedz;
     private JRadioButton rbdodajWierzcholek;
-    private JSpinner spinner1;
+    private JSpinner spinWaga;
     private JLabel labWierzcholekPocz;
     private JLabel labWierzcholekKoncowy;
-    private JSpinner spinner2;
-    private JSpinner spinner3;
+    private JSpinner spinWiePocz;
+    private JSpinner spinWieKon;
+    private JButton butOblicz1;
+    private JLabel labAktKopia;
+    private JLabel labStan;
     private MyPanel panel;
-    private boolean CoRysuje=true;
+    private boolean CoRysuje = true;
 
     public JPanel getRootPanel() {
         return rootPanel;
@@ -33,11 +40,9 @@ public class GUI extends JFrame {
     }
 
 
-
     public JButton getButNowy() {
         return butNowy;
     }
-
 
 
     public JButton getButKrawedz() {
@@ -45,17 +50,14 @@ public class GUI extends JFrame {
     }
 
 
-
     public JButton getButZapisz() {
         return butZapisz;
     }
 
 
-
     public JButton getButCofnij() {
         return butCofnij;
     }
-
 
 
     public JButton getButWierzcholek() {
@@ -65,7 +67,6 @@ public class GUI extends JFrame {
     public JLabel getLabMysz() {
         return labMysz;
     }
-
 
 
     public JButton getButOblicz() {
@@ -99,30 +100,68 @@ public class GUI extends JFrame {
         return panel;
     }
 
+    public JSpinner getSpinWaga() {
+        return spinWaga;
+    }
 
-    public GUI()
-    {
+    public JSpinner getSpinWiePocz() {
+        return spinWiePocz;
+    }
+
+    public JSpinner getSpinWieKon() {
+        return spinWieKon;
+    }
+
+    public JLabel getLabAktKopia() {
+        return labAktKopia;
+    }
+
+    public JLabel getLabStan() {
+        return labStan;
+    }
+
+    public GUI() {
         super("Algorytm Dijkstry");
+        ustawieniaOkna();
+        ustawKomponenty();
+    }
+
+    private void ustawieniaOkna() {
         setContentPane(rootPanel);
-        setSize(1024, 768);
-        butKrawedz.addActionListener(new ActionListenerButKrawedz());
-        butWierzcholek.addActionListener(new ActionListenerButWierzcholek());
-        this.setVisible(true);
-        panel = new MyPanel();
-        try {
-            getContentPane().add(panel);
-        }
-        catch(NullPointerException e)
-        {
-            System.out.println("NullPointer");
-        }
+        setSize(1024, 610);
+        setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        try {
+            BufferedImage bufIm = ImageIO.read(getClass().getResource("icons/Dragon-Radar-icon.png"));
+            setIconImage(bufIm);
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
     }
 
 
-    public static void main(String[] args)
+    private void ustawKomponenty()
     {
-        GUI temp = new GUI();
-        Singleton.getInstance().okno=temp;
+        butKrawedz.addActionListener(new ActionListenerButKrawedz());
+        butWierzcholek.addActionListener(new ActionListenerButWierzcholek());
+        butNowy.addActionListener(new ActionListenerButNowy());
+        butDoPrzodu.addActionListener(new ActionListenerButDoPrzodu());
+        butCofnij.addActionListener(new ActionListenerButCofnij());
+        rbDodajKrawedz.addActionListener(new ActionListenerButKrawedz());
+        rbdodajWierzcholek.addActionListener(new ActionListenerButWierzcholek());
+        spinWaga.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+        spinWieKon.setModel(new SpinnerNumberModel(0,0,100,1));
+        spinWiePocz.setModel(new SpinnerNumberModel(0,0,100,1));
+        butOblicz.addActionListener(new ActionListenerButOblicz());
+        butOblicz1.addActionListener(new ActionListenerButOblicz());
+        butZapisz.addActionListener(new ActionListenerButZapisz());
+        panel = new MyPanel();
+        try {
+        getContentPane().add(panel);
+        }
+        catch(NullPointerException e)
+        {
+        }
+
     }
 }

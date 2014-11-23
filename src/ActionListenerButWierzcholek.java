@@ -8,7 +8,7 @@ public class ActionListenerButWierzcholek implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         Singleton.getInstance().okno.setCoRysuje(true);
-        Singleton.getInstance().okno.getRbDodajKrawedz().setSelected(false);
         Singleton.getInstance().okno.getRbdodajWierzcholek().setSelected(true);
+        Singleton.getInstance().okno.getLabStan().setText("Stan: Rysuje wierzchołki");
     }
 }

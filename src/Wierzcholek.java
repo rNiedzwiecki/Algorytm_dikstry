@@ -5,12 +5,18 @@ import java.awt.*;
  */
 public class Wierzcholek {
     private Point p;
-    public Wierzcholek(Point temp)
+    private int numer;
+    public Wierzcholek(Point temp,int _numer)
     {
         p=new Point(temp.x,temp.y);
+        numer=_numer;
     }
     public Point getP()
     {
         return p;
+    }
+    public int getNumer()
+    {
+        return numer;
     }
 }

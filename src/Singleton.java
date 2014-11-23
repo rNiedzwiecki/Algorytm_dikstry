@@ -8,6 +8,7 @@ public final class Singleton {
     public GUI okno;
     public ArrayList<Wierzcholek> wierzcholki= new ArrayList<Wierzcholek>();
     public ArrayList<Krawedz> krawedzie = new ArrayList<Krawedz>();
+    public ArrayList<Integer> droga=new ArrayList<Integer>();
     public static Singleton getInstance() {
         return ourInstance;
     }

@@ -8,17 +8,18 @@ public class Krawedz {
     private Wierzcholek koncowy;
     private int waga;
 
-    public Krawedz()
-    {
-        poczatkowy= new Wierzcholek(new Point(0,0));
-        koncowy=new Wierzcholek(new Point(0,0));
 
-    }
     public Krawedz(Wierzcholek w1,Wierzcholek w2)
     {
         poczatkowy=w1;
         koncowy=w2;
         waga=1;
+    }
+    public Krawedz(Wierzcholek w1,Wierzcholek w2,int _waga)
+    {
+        poczatkowy=w1;
+        koncowy=w2;
+        waga=_waga;
     }
     public Wierzcholek getPoczatkowy() {
         return poczatkowy;
@@ -49,7 +50,7 @@ public class Krawedz {
     @Override
     public boolean equals(Object ob)
     {
-        if(poczatkowy==((Krawedz)ob).poczatkowy && koncowy==((Krawedz)ob).koncowy)
+        if((poczatkowy==((Krawedz)ob).poczatkowy ||koncowy==((Krawedz)ob).poczatkowy) && (koncowy==((Krawedz)ob).koncowy || poczatkowy==((Krawedz)ob).koncowy))
             return true;
         else
             return false;

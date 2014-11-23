@@ -9,7 +9,7 @@ public class ActionListenerButKrawedz implements ActionListener {
     {
         Singleton.getInstance().okno.setCoRysuje(false);
         Singleton.getInstance().okno.getRbDodajKrawedz().setSelected(true);
-        Singleton.getInstance().okno.getRbdodajWierzcholek().setSelected(false);
+        Singleton.getInstance().okno.getLabStan().setText("Stan: Rysuje krawędzie");
     }
 
 }
